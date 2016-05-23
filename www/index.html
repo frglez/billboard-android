@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>The BillBoard</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+       <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+</head>
+
+<body>
+	<div id="cabeza">
+    	<a href="index.html">The BillBoard</a>
+    </div>
+    <div id="select">
+        <button type="button" onclick="getMovies('now')">Movies On Theaters NOW!</button>
+        <button type="button" onclick="getMovies('upcoming')">Movies Upcoming!</button>
+    </div>
+    <div id="divContent">
+    </div>
+    <div style="clear:both"></div>
+</body>
+</html>
+
+
+<script>
+
+function getMovies(option){
+    document.getElementById('select').style.display = "none";
+
+    var xmlHttp = new XMLHttpRequest();
+    if(option == "upcoming"){
+        xmlHttp.open( "GET", "http://api.themoviedb.org/3/movie/upcoming?api_key=326a88625105ce9a9698fdc842666a6c", false ); // false for synchronous request
+    }else if(option == "now"){
+        xmlHttp.open( "GET", "http://api.themoviedb.org/3/movie/now_playing?api_key=326a88625105ce9a9698fdc842666a6c", false ); // false for synchronous request
+    }
+    xmlHttp.send( null );
+    var elements = xmlHttp.responseText;
+    var obj = JSON.parse(elements);
+
+    for(var i = 0; i < obj.results.length; i++){
+        var title = obj.results[i].title;
+        var img = obj.results[i].poster_path;
+        var id = obj.results[i].id;
+
+        var divElement = document.createElement("div");
+        divElement.className = "divElement"
+        divElement.id = id;
+        divElement.onclick = function(){window.location.href = "info.html?id="+this.id};
+
+        var divEl1 = document.createElement("div");
+        divEl1.id = "divImg";
+
+        var divEl2 = document.createElement("div");
+        divEl2.id = "divP";
+
+        var imgElement = document.createElement("img");
+        imgElement.id = "img";
+
+        if(img != null){
+            imgElement.src = "http://image.tmdb.org/t/p/w500".concat(img);
+        }else{
+            imgElement.src = "http://i.imgur.com/uM9gwQy.png";
+        }
+
+        var pElement = document.createElement("p");
+        var brElement = document.createElement("br");
+
+        pElement.innerHTML = title;
+
+        divEl1.appendChild(imgElement);
+        divEl2.appendChild(pElement);
+        divElement.appendChild(divEl1);
+        divElement.appendChild(divEl2);
+        document.getElementById("divContent").appendChild(divElement);
+    }
+}
+
+</script>
