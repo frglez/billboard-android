@@ -12,12 +12,14 @@
 </head>
 
 <body>
-	<div id="cabeza">
+	<div id="head">
+        <div id="buttonNow" onclick="getMovies('now')">Now!</div>
     	<a href="index.html">The BillBoard</a>
+        <div id="buttonUp" onclick="getMovies('upcoming')">Up!</div>
     </div>
     <div id="select">
-        <button type="button" onclick="getMovies('now')">Movies On Theaters NOW!</button>
-        <button type="button" onclick="getMovies('upcoming')">Movies Upcoming!</button>
+        <!--<button type="buttonNow" onclick="getMovies('now')">Movies On Theaters NOW!</button>
+        <button type="buttonUp" onclick="getMovies('upcoming')">Movies Upcoming!</button>-->
     </div>
     <div id="divContent">
     </div>
