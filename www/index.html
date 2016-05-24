@@ -11,18 +11,15 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 </head>
 
-<body>
+<body onload="getPostersIndex()">
 	<div id="head">
-        <div id="buttonNow" onclick="getMovies('now')">Now!</div>
+        <div id="buttonNow" onclick="getMovies('now')">Now Playing</div>
+        <div class="divDivider" style="float:left"></div>
     	<a href="index.html">The BillBoard</a>
-        <div id="buttonUp" onclick="getMovies('upcoming')">Up!</div>
+        <div id="buttonUp" onclick="getMovies('upcoming')">Upcoming</div>
+        <div class="divDivider" style="float:right"></div>
     </div>
-    <div id="select">
-        <!--<button type="buttonNow" onclick="getMovies('now')">Movies On Theaters NOW!</button>
-        <button type="buttonUp" onclick="getMovies('upcoming')">Movies Upcoming!</button>-->
-    </div>
-    <div id="divContent">
-    </div>
+    <div id="divContent"></div>
     <div style="clear:both"></div>
 </body>
 </html>
@@ -30,8 +27,69 @@
 
 <script>
 
+var myIndex = 0;
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 5000); // Change image every 2 seconds
+}
+
+function getPostersIndex(){
+    var myNode = document.getElementById("divContent");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "http://api.themoviedb.org/3/movie/top_rated?api_key=326a88625105ce9a9698fdc842666a6c", false ); // false for synchronous request
+    xmlHttp.send( null );
+    var elements = xmlHttp.responseText;
+    var obj = JSON.parse(elements);
+
+    var divP = document.createElement("p");
+    divP.innerHTML = "★ Top Rated ★";
+    divP.style.textAlign = "center";
+    document.getElementById('divContent').appendChild(divP);
+
+
+    for(var i = 0; i < obj.results.length; i++){
+        var img = obj.results[i].poster_path;
+
+        var divImg = document.createElement("img");
+        divImg.className = "mySlides";
+        divImg.style.width = "90%";
+        divImg.style.display = "none";
+        divImg.style.margin = "auto";
+
+        divImg.src = "http://image.tmdb.org/t/p/w500".concat(img);
+
+        document.getElementById('divContent').appendChild(divImg);
+    }
+
+    carousel();
+}
+
 function getMovies(option){
-    document.getElementById('select').style.display = "none";
+    var myNode = document.getElementById("divContent");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+    document.getElementById('buttonNow').style.background = "transparent";
+    document.getElementById('buttonUp').style.background = "transparent";
+
+    if(option == "now"){
+        document.getElementById('buttonNow').style.background = "linear-gradient(rgba(0,0,0,0), rgba(255,255,255,0.1))";
+    }else if(option == "upcoming"){
+        document.getElementById('buttonUp').style.background = "linear-gradient(rgba(0,0,0,0), rgba(255,255,255,0.1))";
+    }
+
 
     var xmlHttp = new XMLHttpRequest();
     if(option == "upcoming"){
