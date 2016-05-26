@@ -33,14 +33,14 @@ function carousel() {
     var i;
     var x = document.getElementsByClassName("mySlides");
     for (i = 0; i < x.length; i++) {
-        x[i].style.visibility = "hidden";
+        x[i].style.opacity = 0;
         x[i].style.display = "none";
     }
     myIndex++;
     if (myIndex > x.length) {myIndex = 1}
     x[myIndex-1].style.display = "block";
-    x[myIndex-1].style.visibility = "visible";
-    setTimeout(carousel, 5000); // Change image every 2 seconds
+    x[myIndex-1].style.opacity = 1;
+   setTimeout(carousel, 5000); // Change image every 2 seconds 
 }
 
 function getPostersIndex(){
@@ -66,11 +66,6 @@ function getPostersIndex(){
 
         var divImg = document.createElement("img");
         divImg.className = "mySlides";
-        divImg.style.width = "90%";
-        divImg.style.display = "none";
-        divImg.style.visibility = "hidden";
-        divImg.style.margin = "auto";
-        divImg.style.transition = "visibility 0.3s ease-in-out"
 
         divImg.src = "http://image.tmdb.org/t/p/w500".concat(img);
 
