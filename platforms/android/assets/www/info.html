@@ -28,7 +28,7 @@
             <p id="release_date"></p>
             <h4>Votes:</h4>
             <p id="votes">?</p>
-            <button id="shareButton" onclick="window.plugins.socialsharing.share('PROBANDO SHARING')"></button>
+            <button id="shareButton" onclick=""></button>
         </div>
     </div>
 
@@ -62,7 +62,6 @@
 $_GET[decode(arguments[1])] = decode(arguments[2]);
 });
 
-
     function getInfo(){
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", "http://api.themoviedb.org/3/movie/"+$_GET['id']+"?api_key=326a88625105ce9a9698fdc842666a6c", false ); // false for synchronous request
@@ -86,6 +85,8 @@ $_GET[decode(arguments[1])] = decode(arguments[2]);
         var release_date = obj.release_date;
         var votes = obj.vote_average;
         var genres = "";
+        var poster = "http://image.tmdb.org/t/p/w500".concat(img);
+        var movie = "https://www.themoviedb.org/movie/".concat($_GET['id']);
         for(var i = 0; i < obj.genres.length; i++){
             if(i != 0){
                 genres = genres.concat(",  "+obj.genres[i]['name']);
@@ -107,9 +108,10 @@ $_GET[decode(arguments[1])] = decode(arguments[2]);
             var urlVideo = "http://www.youtube.com/embed/".concat(objVideo.results[0]['key']);
         }
 
+        document.getElementById('shareButton').onclick = function(){window.plugins.socialsharing.share('Hey, check it out this movie!', null, poster, movie);}
 
         if(img != null){
-            document.getElementById('img').src = "http://image.tmdb.org/t/p/w500".concat(img);
+            document.getElementById('img').src = poster;
         }else{
             document.getElementById('img').src = "http://i.imgur.com/uM9gwQy.png";
         }
@@ -126,8 +128,6 @@ $_GET[decode(arguments[1])] = decode(arguments[2]);
 
         if(objVideo.results[0]['key'] != null){
             document.getElementById('frameVideo').src = urlVideo;
-            //document.getElementById('trailer').innerHTML = urlVideo;
-            //document.getElementById('trailer').href = urlVideo;
         }
     }
 
