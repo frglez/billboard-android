@@ -90,6 +90,7 @@
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
+    <gap:plugin name="nl.x-services.plugins.socialsharing" />
     <icon src="icon.png" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

@@ -96,6 +96,18 @@ body{
     display:inline-block;
 }
 
+#shareButton{
+    background: url('../share.png') no-repeat;
+    background-size: 50px 50px;
+    border: none;
+    width: 30%;
+    height: 50px !important;
+}
+
+#shareButton:hover{
+    cursor:pointer;
+}
+
 #divImgInfo{
     height: 100%;
     width: 45%;
@@ -152,7 +164,7 @@ body{
 }
 
 img.mySlides{
-	transition: opacity 0.3s ease-in-out;	
+	transition: opacity 0.3s ease-in-out;
 	width: 90%;
     display: none;
     opacity: 0;

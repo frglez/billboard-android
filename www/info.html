@@ -6,6 +6,9 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+
+    <script type="text/javascript" src="cordova.js"></script>
+
 </head>
 
 <body onload="getInfo()">
@@ -25,8 +28,7 @@
             <p id="release_date"></p>
             <h4>Votes:</h4>
             <p id="votes">?</p>
-            <!--<h4>Trailer:</h4>
-            <a id="trailer" href="" target="_blank"></a>-->
+            <button id="shareButton" onclick="window.plugins.socialsharing.share('PROBANDO SHARING')"></button>
         </div>
     </div>
 
@@ -47,6 +49,8 @@
 
 
 <script>
+
+//app.initialize();
 
     var $_GET = {};
 
@@ -100,7 +104,6 @@ $_GET[decode(arguments[1])] = decode(arguments[2]);
         }
 
         if(objVideo.results != ""){
-            //var urlVideo = "https://www.youtube.com/watch?v=".concat(objVideo.results[0]['key']);
             var urlVideo = "http://www.youtube.com/embed/".concat(objVideo.results[0]['key']);
         }
 
