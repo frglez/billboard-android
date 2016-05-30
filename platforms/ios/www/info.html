@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>The BillBoard</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+
+    <script type="text/javascript" src="cordova.js"></script>
+
+</head>
+
+<body onload="getInfo()">
+
+    <div id="head">
+        <a href="index.html">The BillBoard</a>
+    </div>
+
+    <div id="divMain">
+        <div id="divImgInfo"><img id="img"></img></div>
+        <div id="divMainInfo">
+            <h4>Title:</h4>
+            <p id="title"></p>
+            <h4>Genres:</h4>
+            <p id="genres"></p>
+            <h4>Release Date:</h4>
+            <p id="release_date"></p>
+            <h4>Votes:</h4>
+            <p id="votes">?</p>
+            <button id="shareButton" onclick="window.plugins.socialsharing.share('PROBANDO SHARING')"></button>
+        </div>
+    </div>
+
+    <div id="divCast">
+        <h3>Cast:</h3>
+        <p id="cast"></p>
+    </div>
+
+    <div id="divOther">
+        <h3>Overview:</h3>
+        <p id="overview"></p>
+    </div>
+
+    <iframe id="frameVideo" width="420" height="315" src="" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+</body>
+</html>
+
+
+<script>
+
+//app.initialize();
+
+    var $_GET = {};
+
+    document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+        function decode(s) {
+    return decodeURIComponent(s.split("+").join(" "));
+    }
+
+$_GET[decode(arguments[1])] = decode(arguments[2]);
+});
+
+
+    function getInfo(){
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "http://api.themoviedb.org/3/movie/"+$_GET['id']+"?api_key=326a88625105ce9a9698fdc842666a6c", false ); // false for synchronous request
+        xmlHttp.send( null );
+        var elements = xmlHttp.responseText;
+        var obj = JSON.parse(elements);
+        var xmlHttpVideo = new XMLHttpRequest();
+        xmlHttpVideo.open( "GET", "http://api.themoviedb.org/3/movie/"+$_GET['id']+"/videos?api_key=326a88625105ce9a9698fdc842666a6c", false ); // false for synchronous request
+        xmlHttpVideo.send( null );
+        var elementsVideo = xmlHttpVideo.responseText;
+        var objVideo = JSON.parse(elementsVideo);
+        var xmlHttpCast = new XMLHttpRequest();
+        xmlHttpCast.open( "GET", "http://api.themoviedb.org/3/movie/"+$_GET['id']+"/credits?api_key=326a88625105ce9a9698fdc842666a6c", false ); // false for synchronous request
+        xmlHttpCast.send( null );
+        var elementsCast = xmlHttpCast.responseText;
+        var objCast = JSON.parse(elementsCast);
+
+        var title = obj.title;
+        var img = obj.poster_path;
+        var overview = obj.overview;
+        var release_date = obj.release_date;
+        var votes = obj.vote_average;
+        var genres = "";
+        for(var i = 0; i < obj.genres.length; i++){
+            if(i != 0){
+                genres = genres.concat(",  "+obj.genres[i]['name']);
+            }else{
+                genres = genres.concat("  "+obj.genres[i]['name']);
+            }
+        }
+
+        var cast = "";
+        for(var i = 0; i < objCast.cast.length; i++){
+            if(i != 0){
+                cast = cast.concat(",  "+objCast.cast[i]['name']);
+            }else{
+                cast = cast.concat("  "+objCast.cast[i]['name']);
+            }
+        }
+
+        if(objVideo.results != ""){
+            var urlVideo = "http://www.youtube.com/embed/".concat(objVideo.results[0]['key']);
+        }
+
+
+        if(img != null){
+            document.getElementById('img').src = "http://image.tmdb.org/t/p/w500".concat(img);
+        }else{
+            document.getElementById('img').src = "http://i.imgur.com/uM9gwQy.png";
+        }
+        document.getElementById('title').innerHTML = title;
+        document.getElementById('release_date').innerHTML = release_date;
+        document.getElementById('overview').innerHTML = overview;
+        document.getElementById('cast').innerHTML = cast;
+
+        if(votes != null){
+            document.getElementById('votes').innerHTML = votes;
+        }
+
+        document.getElementById('genres').innerHTML = genres;
+
+        if(objVideo.results[0]['key'] != null){
+            document.getElementById('frameVideo').src = urlVideo;
+            //document.getElementById('trailer').innerHTML = urlVideo;
+            //document.getElementById('trailer').href = urlVideo;
+        }
+    }
+
+</script>

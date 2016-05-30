@@ -1,0 +1,172 @@
+/* CSS Document */
+
+body{
+    width: 100%;
+    height: 100%;
+	margin:0;
+	background:#000;
+	color:#f7f7f7;
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#head{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	font-size:25px;
+	margin-bottom:10px;
+	text-align:center;
+	position:relative;
+	background:#222;
+}
+
+#head a{
+    text-decoration: none;
+    color: white;
+}
+
+#head div{
+    width: 25%;
+    height: 100%;
+    font-size: 0.5em;
+}
+
+#head div:hover{
+    cursor: pointer;
+}
+
+.divDivider {
+    width: 1px !important;
+    height: 40% !important;
+    margin-top: 15px;
+    border-right: 1px solid white;
+}
+
+#buttonNow{
+    float:left;
+}
+
+#buttonUp{
+    float:right;
+}
+
+#select{
+    text-align: center;
+}
+
+
+#divContent{
+	width:100%;
+	height:100%;
+}
+
+.divElement{
+    margin-left: 10px;
+    margin-bottom: 10px;
+    float:left;
+    width: 120px;
+    height: 220px;
+    display:inline-block;
+}
+
+.divElement:hover{
+    cursor: pointer;
+}
+
+#divImg{
+    width: 100%;
+    height: 80%;
+}
+
+#divP{
+    width: 100%;
+    height: 15%;
+    text-align: center;
+	font-style:italic;
+}
+
+#img{
+    width: 100%;
+    height: 100%;
+}
+
+#divMain{
+    width: 100%;
+    height: auto;
+    display:inline-block;
+}
+
+#shareButton{
+    background: url('../share.png') no-repeat;
+    background-size: 50px 50px;
+    border: none;
+    width: 30%;
+    height: 50px !important;
+}
+
+#shareButton:hover{
+    cursor:pointer;
+}
+
+#divImgInfo{
+    height: 100%;
+    width: 45%;
+    float:left;
+}
+
+#divMainInfo{
+    height: 100%;
+    width: 48%;
+    float:right;
+    line-height: 20%;
+}
+
+#divMainInfo p{
+    font-size: 0.8em;
+    line-height: 100%;
+}
+
+#divMainInfo h{
+}
+
+#divMainInfo a{
+    word-break: break-all;
+    line-height: 100%;
+}
+
+#divCast{
+    height:100%;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#divCast p{
+    font-size: 0.9em;
+    text-align: justify;
+}
+
+#divOther{
+    height:100%;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#divOther p{
+    font-size: 0.9em;
+    text-align: justify;
+}
+
+#frameVideo{
+    height: auto;
+    width: 98%;
+}
+
+img.mySlides{
+	transition: opacity 0.3s ease-in-out;
+	width: 90%;
+    display: none;
+    opacity: 0;
+    margin:auto;
+}
